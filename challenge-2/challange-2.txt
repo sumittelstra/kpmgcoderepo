@@ -1,0 +1,60 @@
+Challenge-2
+
+We need to write code that will query the meta data of an instance within AWS and provide a json formatted output. The choice of language and implementation is up to you.
+Bonus Points
+The code allows for a particular data key to be retrieved individually
+
+Solution: -
+
+Note: - Using terraform for the above solution
+
+# Terraform & Google provider version requirements
+
+Main.tf
+
+terraform {
+  required_version = "<= 0.12.23"
+}
+
+# Setting GCP project for running the gcloud command
+
+provider "google" {
+  project = var.gcp_project_id.  #example- project1
+}
+
+resource "null_resource" "meta-data {
+
+  provisioner "local-exec" {
+    command = " gcloud compute instances describe instance1   --flatten="metadata []" 
+  }
+
+}
+
+
+Json Output: -
+ 
+terraform output -json 
+
+
+The code allows for a particular data key to be retrieved individually
+
+
+ --flatten="metadata [] flag to scope the output to a particular data key.
+
+Example – 
+
+gcloud compute instances describe instance1   --flatten="metadata[instance-id]
+
+output – 
+Command:-  Terraform output -json
+
+
+sumit-d882d:solutions sumitd${
+"instance-id": {
+"sensitive":false,
+"type": "string",
+"value": "ins-3465278900"
+
+},
+
+}
